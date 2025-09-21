@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Phone, Mail, MapPin, Instagram, Facebook, Clock } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Phone, Mail, MapPin, Instagram, Facebook, Clock } from "lucide-react";
 
 export function Footer() {
   return (
@@ -11,17 +11,30 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="mb-4">
-              <div className="text-2xl font-playfair font-bold text-rose-gold mb-1">Etherealglow</div>
-              <div className="text-sm font-cormorant text-dusty-rose">By Ishika</div>
+              <div className="text-2xl font-playfair font-bold text-rose-gold mb-1">
+                Etherealglow
+              </div>
+              <div className="text-sm font-cormorant text-dusty-rose">
+                By Ishika
+              </div>
             </div>
             <p className="font-montserrat text-cream/80 mb-6 leading-relaxed">
-              Your premier destination for luxury beauty treatments and exceptional service.
+              Your premier destination for Professional beauty treatments and
+              exceptional service.
             </p>
             <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="text-cream hover:text-rose-gold hover:bg-rose-gold/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-cream hover:text-rose-gold hover:bg-rose-gold/10"
+              >
                 <Instagram className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="text-cream hover:text-rose-gold hover:bg-rose-gold/10">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-cream hover:text-rose-gold hover:bg-rose-gold/10"
+              >
                 <Facebook className="h-5 w-5" />
               </Button>
             </div>
@@ -29,61 +42,75 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-cormorant text-lg font-semibold text-rose-gold mb-4">Quick Links</h3>
+            <h3 className="font-cormorant text-lg font-semibold text-rose-gold mb-4">
+              Quick Links
+            </h3>
             <ul className="space-y-2">
-              {["Home", "Services", "About", "Gallery", "Contact"].map((item) => (
-                <li key={item}>
-                  <Link
-                    href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                    className="font-montserrat text-cream/80 hover:text-rose-gold transition-colors duration-300"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              {["Home", "Services", "About", "Gallery", "Contact"].map(
+                (item) => (
+                  <li key={item}>
+                    <Link
+                      href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                      className="font-montserrat text-cream/80 hover:text-rose-gold transition-colors duration-300"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
           {/* Services */}
           <div>
-            <h3 className="font-cormorant text-lg font-semibold text-rose-gold mb-4">Services</h3>
+            <h3 className="font-cormorant text-lg font-semibold text-rose-gold mb-4">
+              Services
+            </h3>
             <ul className="space-y-2">
-              {["Nail Art", "Skincare", "Hair Styling", "Spa Treatments", "Bridal Packages"].map((service) => (
-                <li key={service}>
-                  <Link
-                    href="/services"
-                    className="font-montserrat text-cream/80 hover:text-rose-gold transition-colors duration-300"
-                  >
-                    {service}
-                  </Link>
-                </li>
-              ))}
+              {["Nail Art", "Skincare", "Hair Styling", "Bridal Packages"].map(
+                (service) => (
+                  <li key={service}>
+                    <Link
+                      href="/services"
+                      className="font-montserrat text-cream/80 hover:text-rose-gold transition-colors duration-300"
+                    >
+                      {service}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-cormorant text-lg font-semibold text-rose-gold mb-4">Contact Info</h3>
+            <h3 className="font-cormorant text-lg font-semibold text-rose-gold mb-4">
+              Contact Info
+            </h3>
             <div className="space-y-3">
               <div className="flex items-start">
                 <Phone className="h-5 w-5 text-rose-gold mr-3 mt-0.5 flex-shrink-0" />
                 <div>
-                  <div className="font-montserrat text-cream/80">+91 98765 43210</div>
+                  <div className="font-montserrat text-cream/80">
+                    +91 98765 43210
+                  </div>
                 </div>
               </div>
               <div className="flex items-start">
                 <Mail className="h-5 w-5 text-rose-gold mr-3 mt-0.5 flex-shrink-0" />
                 <div>
-                  <div className="font-montserrat text-cream/80">hello@etherealglow.com</div>
+                  <div className="font-montserrat text-cream/80">
+                    hello@etherealglow.com
+                  </div>
                 </div>
               </div>
               <div className="flex items-start">
                 <MapPin className="h-5 w-5 text-rose-gold mr-3 mt-0.5 flex-shrink-0" />
                 <div>
                   <div className="font-montserrat text-cream/80">
-                    123 Beauty Lane
+                    Mobile Service Available
                     <br />
-                    Mumbai, Maharashtra 400001
+                    Mumbai & Surrounding Areas
                   </div>
                 </div>
               </div>
@@ -127,5 +154,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

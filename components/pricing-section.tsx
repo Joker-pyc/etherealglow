@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Check, Star } from "lucide-react"
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Check, Star } from "lucide-react";
 
 const pricingData = [
   {
@@ -40,19 +40,7 @@ const pricingData = [
       { name: "Hair Spa", price: "₹2,000", duration: "90 min" },
     ],
   },
-  {
-    category: "Spa Experiences",
-    popular: false,
-    services: [
-      { name: "Full Body Massage", price: "₹2,000", duration: "90 min" },
-      { name: "Aromatherapy Session", price: "₹2,500", duration: "75 min" },
-      { name: "Hot Stone Therapy", price: "₹3,000", duration: "100 min" },
-      { name: "Body Scrub & Wrap", price: "₹2,800", duration: "120 min" },
-      { name: "Relaxation Package", price: "₹4,500", duration: "150 min" },
-      { name: "Stress Relief Treatment", price: "₹3,200", duration: "110 min" },
-    ],
-  },
-]
+];
 
 export function PricingSection() {
   return (
@@ -64,7 +52,8 @@ export function PricingSection() {
             Service Pricing
           </h2>
           <p className="font-montserrat text-lg text-warm-brown/80 max-w-2xl mx-auto text-pretty">
-            Transparent pricing for all our luxury beauty services. Quality and excellence at every price point.
+            Transparent pricing for all our Professional beauty services.
+            Quality and excellence at every price point.
           </p>
         </div>
 
@@ -73,7 +62,7 @@ export function PricingSection() {
           {pricingData.map((category, index) => (
             <Card
               key={index}
-              className={`relative overflow-hidden luxury-shadow border-0 ${
+              className={`relative overflow-hidden Professional -shadow border-0 ${
                 category.popular ? "ring-2 ring-rose-gold" : ""
               }`}
             >
@@ -100,10 +89,16 @@ export function PricingSection() {
                       className="flex items-center justify-between py-3 border-b border-dusty-rose/20 last:border-b-0"
                     >
                       <div className="flex-1">
-                        <div className="font-montserrat font-medium text-warm-brown">{service.name}</div>
-                        <div className="font-montserrat text-sm text-warm-brown/60">{service.duration}</div>
+                        <div className="font-montserrat font-medium text-warm-brown">
+                          {service.name}
+                        </div>
+                        <div className="font-montserrat text-sm text-warm-brown/60">
+                          {service.duration}
+                        </div>
                       </div>
-                      <div className="font-playfair text-lg font-bold text-rose-gold">{service.price}</div>
+                      <div className="font-playfair text-lg font-bold text-rose-gold">
+                        {service.price}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -121,25 +116,39 @@ export function PricingSection() {
         {/* Package Deals */}
         <div className="mt-16">
           <div className="text-center mb-8">
-            <h3 className="font-cormorant text-3xl font-semibold text-warm-brown mb-2">Special Packages</h3>
-            <p className="font-montserrat text-warm-brown/80">Save more with our curated service combinations</p>
+            <h3 className="font-cormorant text-3xl font-semibold text-warm-brown mb-2">
+              Special Packages
+            </h3>
+            <p className="font-montserrat text-warm-brown/80">
+              Save more with our curated service combinations
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              {
-                name: "Bridal Complete",
-                services: ["Bridal Makeup", "Hair Styling", "Nail Art", "Pre-Wedding Facial"],
-                originalPrice: "₹8,500",
-                packagePrice: "₹6,500",
-                savings: "₹2,000",
-              },
-              {
+                            {
                 name: "Pamper Package",
-                services: ["Full Body Massage", "Facial Treatment", "Manicure", "Hair Spa"],
+                services: [
+                  "Full Body Massage",
+                  "Facial Treatment",
+                  "Manicure",
+                  "Hair Spa",
+                ],
                 originalPrice: "₹6,200",
                 packagePrice: "₹4,800",
                 savings: "₹1,400",
+              },
+              {
+                name: "Bridal Complete",
+                services: [
+                  "Bridal Makeup",
+                  "Hair Styling",
+                  "Nail Art",
+                  "Pre-Wedding Facial",
+                ],
+                originalPrice: "₹8,500",
+                packagePrice: "₹6,500",
+                savings: "₹2,000",
               },
               {
                 name: "Monthly Maintenance",
@@ -149,12 +158,20 @@ export function PricingSection() {
                 savings: "₹1,000",
               },
             ].map((pkg, index) => (
-              <Card key={index} className="bg-white luxury-shadow border-0">
+              <Card
+                key={index}
+                className="bg-white Professional -shadow border-0"
+              >
                 <CardContent className="p-6">
-                  <h4 className="font-cormorant text-xl font-semibold text-warm-brown mb-3">{pkg.name}</h4>
+                  <h4 className="font-cormorant text-xl font-semibold text-warm-brown mb-3">
+                    {pkg.name}
+                  </h4>
                   <ul className="space-y-2 mb-4">
                     {pkg.services.map((service, i) => (
-                      <li key={i} className="flex items-center font-montserrat text-sm text-warm-brown/80">
+                      <li
+                        key={i}
+                        className="flex items-center font-montserrat text-sm text-warm-brown/80"
+                      >
                         <Check className="h-4 w-4 text-rose-gold mr-2 flex-shrink-0" />
                         {service}
                       </li>
@@ -169,7 +186,9 @@ export function PricingSection() {
                         Save {pkg.savings}
                       </span>
                     </div>
-                    <div className="font-playfair text-2xl font-bold text-rose-gold mb-3">{pkg.packagePrice}</div>
+                    <div className="font-playfair text-2xl font-bold text-rose-gold mb-3">
+                      {pkg.packagePrice}
+                    </div>
                     <Button className="w-full bg-warm-brown hover:bg-warm-brown/90 text-cream font-montserrat rounded-full">
                       Book Package
                     </Button>
@@ -181,5 +200,5 @@ export function PricingSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

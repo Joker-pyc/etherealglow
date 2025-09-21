@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useState } from "react"
-import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const galleryItems = [
   {
     id: 1,
     category: "nails",
     title: "3D Floral Nail Art",
-    image: "/luxury-nail-art-detailed-manicure-station.jpg",
+    image: "/luxury-nail-art-salon-with-elegant-manicure-setup.jpg",
     description: "Intricate 3D floral design with rose gold accents",
   },
   {
@@ -47,39 +47,45 @@ const galleryItems = [
     image: "/luxury-facial-treatment-room-with-soft-lighting.jpg",
     description: "Advanced anti-aging facial with visible results",
   },
-]
+];
 
 export function GalleryGrid() {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null)
-  const [activeCategory, setActiveCategory] = useState("all")
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [activeCategory, setActiveCategory] = useState("all");
 
   const filteredItems =
-    activeCategory === "all" ? galleryItems : galleryItems.filter((item) => item.category === activeCategory)
+    activeCategory === "all"
+      ? galleryItems
+      : galleryItems.filter((item) => item.category === activeCategory);
 
   const openLightbox = (id: number) => {
-    setSelectedImage(id)
-  }
+    setSelectedImage(id);
+  };
 
   const closeLightbox = () => {
-    setSelectedImage(null)
-  }
+    setSelectedImage(null);
+  };
 
   const navigateImage = (direction: "prev" | "next") => {
-    if (selectedImage === null) return
+    if (selectedImage === null) return;
 
-    const currentIndex = filteredItems.findIndex((item) => item.id === selectedImage)
-    let newIndex
+    const currentIndex = filteredItems.findIndex(
+      (item) => item.id === selectedImage
+    );
+    let newIndex;
 
     if (direction === "prev") {
-      newIndex = currentIndex > 0 ? currentIndex - 1 : filteredItems.length - 1
+      newIndex = currentIndex > 0 ? currentIndex - 1 : filteredItems.length - 1;
     } else {
-      newIndex = currentIndex < filteredItems.length - 1 ? currentIndex + 1 : 0
+      newIndex = currentIndex < filteredItems.length - 1 ? currentIndex + 1 : 0;
     }
 
-    setSelectedImage(filteredItems[newIndex].id)
-  }
+    setSelectedImage(filteredItems[newIndex].id);
+  };
 
-  const selectedItem = selectedImage ? galleryItems.find((item) => item.id === selectedImage) : null
+  const selectedItem = selectedImage
+    ? galleryItems.find((item) => item.id === selectedImage)
+    : null;
 
   return (
     <>
@@ -96,7 +102,7 @@ export function GalleryGrid() {
                 className="group cursor-pointer"
                 onClick={() => openLightbox(item.id)}
               >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-luxury hover:shadow-luxury-hover transition-all duration-500 group-hover:-translate-y-2">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-Professional  hover:shadow-Professional -hover transition-all duration-500 group-hover:-translate-y-2">
                   <div className="aspect-square overflow-hidden relative">
                     <img
                       src={item.image || "/placeholder.svg"}
@@ -105,7 +111,9 @@ export function GalleryGrid() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-warm-brown/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <h3 className="font-cormorant text-xl font-bold mb-1">{item.title}</h3>
+                      <h3 className="font-cormorant text-xl font-bold mb-1">
+                        {item.title}
+                      </h3>
                       <p className="font-inter text-sm">{item.description}</p>
                     </div>
                   </div>
@@ -148,12 +156,16 @@ export function GalleryGrid() {
             />
 
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-lg">
-              <h3 className="font-cormorant text-2xl font-bold text-white mb-2">{selectedItem.title}</h3>
-              <p className="font-inter text-white/80">{selectedItem.description}</p>
+              <h3 className="font-cormorant text-2xl font-bold text-white mb-2">
+                {selectedItem.title}
+              </h3>
+              <p className="font-inter text-white/80">
+                {selectedItem.description}
+              </p>
             </div>
           </div>
         </div>
       )}
     </>
-  )
+  );
 }

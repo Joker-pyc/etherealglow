@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 const teamMembers = [
   {
@@ -21,7 +21,7 @@ const teamMembers = [
     specialty: "Color & Styling Expert",
     image: "/professional-hair-stylist-with-modern-tools.jpg",
   },
-]
+];
 
 export function TeamSection() {
   return (
@@ -34,9 +34,12 @@ export function TeamSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-warm-brown mb-6">Our Expert Team</h2>
+          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-warm-brown mb-6">
+            Our Expert Team
+          </h2>
           <p className="font-inter text-xl text-warm-brown/70 max-w-3xl mx-auto text-pretty">
-            Meet the talented artists who bring your beauty vision to life with skill, passion, and attention to detail
+            Meet the talented artists who bring your beauty vision to life with
+            skill, passion, and attention to detail
           </p>
         </motion.div>
 
@@ -50,7 +53,7 @@ export function TeamSection() {
               viewport={{ once: true }}
               className="group"
             >
-              <div className="bg-white rounded-2xl overflow-hidden shadow-luxury hover:shadow-luxury-hover transition-all duration-500 group-hover:-translate-y-2">
+              <div className="bg-white rounded-2xl overflow-hidden shadow-Professional  hover:shadow-Professional -hover transition-all duration-500 group-hover:-translate-y-2">
                 <div className="aspect-[3/4] overflow-hidden">
                   <img
                     src={member.image || "/placeholder.svg"}
@@ -59,9 +62,15 @@ export function TeamSection() {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="font-cormorant text-2xl font-bold text-warm-brown mb-2">{member.name}</h3>
-                  <p className="font-montserrat text-dusty-rose font-medium mb-2">{member.role}</p>
-                  <p className="font-inter text-warm-brown/70 text-sm">{member.specialty}</p>
+                  <h3 className="font-cormorant text-2xl font-bold text-warm-brown mb-2">
+                    {member.name}
+                  </h3>
+                  <p className="font-montserrat text-dusty-rose font-medium mb-2">
+                    {member.role}
+                  </p>
+                  <p className="font-inter text-warm-brown/70 text-sm">
+                    {member.specialty}
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -69,5 +78,5 @@ export function TeamSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

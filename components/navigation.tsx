@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -14,7 +14,7 @@ export function Navigation() {
     { href: "/about", label: "About" },
     { href: "/gallery", label: "Gallery" },
     { href: "/contact", label: "Contact" },
-  ]
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] glass-effect">
@@ -22,8 +22,12 @@ export function Navigation() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 min-w-0">
-            <div className="text-xl sm:text-2xl font-playfair font-bold text-warm-brown truncate">Etherealglow</div>
-            <div className="text-xs sm:text-sm font-cormorant text-warm-brown/80 whitespace-nowrap">By Ishika</div>
+            <div className="text-xl sm:text-2xl font-playfair font-bold text-warm-brown truncate">
+              Etherealglow
+            </div>
+            <div className="text-xs sm:text-sm font-cormorant text-warm-brown/80 whitespace-nowrap">
+              By Ishika
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -43,7 +47,7 @@ export function Navigation() {
           <div className="hidden md:flex items-center space-x-4">
             <Button
               asChild
-              className="bg-rose-gold hover:bg-soft-gold text-white font-montserrat px-6 py-2 rounded-full transition-all duration-300 luxury-shadow"
+              className="bg-rose-gold hover:bg-soft-gold text-white font-montserrat px-6 py-2 rounded-full transition-all duration-300 Professional -shadow"
             >
               <Link href="/booking">Book Appointment</Link>
             </Button>
@@ -51,8 +55,17 @@ export function Navigation() {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <Button variant="ghost" size="sm" onClick={() => setIsOpen(!isOpen)} className="text-warm-brown">
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-warm-brown"
+            >
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </Button>
           </div>
         </div>
@@ -84,5 +97,5 @@ export function Navigation() {
         )}
       </div>
     </nav>
-  )
+  );
 }

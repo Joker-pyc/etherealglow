@@ -1,20 +1,55 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { motion } from "framer-motion"
-import { useState } from "react"
-import { Calendar, Clock, User, Phone, Mail, MessageSquare } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion";
+import { useState } from "react";
+import {
+  Calendar,
+  Clock,
+  User,
+  Phone,
+  Mail,
+  MessageSquare,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const services = [
-  { id: "nail-art", name: "Nail Art & Extensions", duration: "90 min", price: "₹2,500" },
-  { id: "facial", name: "Signature Facial", duration: "75 min", price: "₹3,500" },
-  { id: "hair-styling", name: "Hair Styling & Color", duration: "120 min", price: "₹4,500" },
-  { id: "spa-package", name: "Luxury Spa Package", duration: "180 min", price: "₹8,500" },
-]
+  {
+    id: "nail-art",
+    name: "Nail Art & Extensions",
+    duration: "90 min",
+    price: "₹2,500",
+  },
+  {
+    id: "facial",
+    name: "Signature Facial",
+    duration: "75 min",
+    price: "₹3,500",
+  },
+  {
+    id: "hair-styling",
+    name: "Hair Styling & Color",
+    duration: "120 min",
+    price: "₹4,500",
+  },
+  {
+    id: "spa-package",
+    name: "Professional  Spa Package",
+    duration: "180 min",
+    price: "₹8,500",
+  },
+];
 
-const timeSlots = ["9:00 AM", "10:30 AM", "12:00 PM", "1:30 PM", "3:00 PM", "4:30 PM", "6:00 PM"]
+const timeSlots = [
+  "9:00 AM",
+  "10:30 AM",
+  "12:00 PM",
+  "1:30 PM",
+  "3:00 PM",
+  "4:30 PM",
+  "6:00 PM",
+];
 
 export function BookingForm() {
   const [formData, setFormData] = useState({
@@ -25,19 +60,21 @@ export function BookingForm() {
     phone: "",
     email: "",
     notes: "",
-  })
+  });
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    alert("Booking request submitted! We'll confirm your appointment within 24 hours.")
-    setIsSubmitting(false)
+    alert(
+      "Booking request submitted! We'll confirm your appointment within 24 hours."
+    );
+    setIsSubmitting(false);
     setFormData({
       service: "",
       date: "",
@@ -46,12 +83,12 @@ export function BookingForm() {
       phone: "",
       email: "",
       notes: "",
-    })
-  }
+    });
+  };
 
   const updateFormData = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   return (
     <motion.div
@@ -59,14 +96,18 @@ export function BookingForm() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
-      className="bg-white rounded-2xl shadow-luxury p-8"
+      className="bg-white rounded-2xl shadow-Professional  p-8"
     >
-      <h2 className="font-playfair text-3xl font-bold text-warm-brown mb-8">Schedule Your Appointment</h2>
+      <h2 className="font-playfair text-3xl font-bold text-warm-brown mb-8">
+        Schedule Your Appointment
+      </h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Service Selection */}
         <div>
-          <label className="block font-montserrat font-medium text-warm-brown mb-3">Select Service</label>
+          <label className="block font-montserrat font-medium text-warm-brown mb-3">
+            Select Service
+          </label>
           <div className="grid gap-3">
             {services.map((service) => (
               <label
@@ -87,11 +128,17 @@ export function BookingForm() {
                     className="sr-only"
                   />
                   <div>
-                    <div className="font-cormorant text-lg font-semibold text-warm-brown">{service.name}</div>
-                    <div className="font-inter text-sm text-warm-brown/70">{service.duration}</div>
+                    <div className="font-cormorant text-lg font-semibold text-warm-brown">
+                      {service.name}
+                    </div>
+                    <div className="font-inter text-sm text-warm-brown/70">
+                      {service.duration}
+                    </div>
                   </div>
                 </div>
-                <div className="font-montserrat font-bold text-dusty-rose">{service.price}</div>
+                <div className="font-montserrat font-bold text-dusty-rose">
+                  {service.price}
+                </div>
               </label>
             ))}
           </div>
@@ -208,5 +255,5 @@ export function BookingForm() {
         </Button>
       </form>
     </motion.div>
-  )
+  );
 }

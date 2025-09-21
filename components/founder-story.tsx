@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 export function FounderStory() {
   return (
@@ -15,7 +15,7 @@ export function FounderStory() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-luxury">
+            <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-Professional ">
               <img
                 src="/elegant-portrait-of-ishika--professional-beauty-sa.jpg"
                 alt="Ishika - Founder of Etherealglow"
@@ -32,31 +32,41 @@ export function FounderStory() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold text-warm-brown mb-8">Meet Ishika</h2>
+            <h2 className="font-playfair text-4xl md:text-5xl font-bold text-warm-brown mb-8">
+              Meet Ishika
+            </h2>
             <div className="space-y-6 font-inter text-lg text-warm-brown/80 leading-relaxed">
               <p>
-                With over a decade of experience in the beauty industry, Ishika founded Etherealglow with a vision to
-                create more than just a salon – a sanctuary where beauty, wellness, and artistry converge.
+                With over a decade of experience in the beauty industry, Ishika
+                founded Etherealglow with a vision to create more than just a
+                salon – a sanctuary where beauty, wellness, and artistry
+                converge.
               </p>
               <p>
-                Her journey began in the prestigious beauty academies of Mumbai, where she mastered the art of nail
-                design, skincare, and holistic beauty treatments. Today, she leads a team of passionate artists who
+                Her journey began in prestigious beauty academies, where she
+                mastered the art of nail design, skincare, and holistic beauty
+                treatments. Today, she leads a team of passionate artists who
                 share her commitment to excellence.
               </p>
               <p>
-                "Beauty is not just about looking good – it's about feeling confident, radiant, and authentically
-                yourself. That's what we create here at Etherealglow."
+                "Beauty is not just about looking good – it's about feeling
+                confident, radiant, and authentically yourself. That's what we
+                create here at Etherealglow."
               </p>
             </div>
 
             {/* Signature */}
             <div className="mt-8">
-              <div className="font-cormorant text-3xl text-dusty-rose italic">- Ishika</div>
-              <div className="font-montserrat text-sm text-warm-brown/60 mt-1">Founder & Creative Director</div>
+              <div className="font-cormorant text-3xl text-dusty-rose italic">
+                - Ishika
+              </div>
+              <div className="font-montserrat text-sm text-warm-brown/60 mt-1">
+                Founder & Creative Director
+              </div>
             </div>
           </motion.div>
         </div>
       </div>
     </section>
-  )
+  );
 }
