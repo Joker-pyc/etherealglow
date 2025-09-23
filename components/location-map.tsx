@@ -31,12 +31,11 @@ export function LocationMap() {
             viewport={{ once: true }}
             className="lg:col-span-2"
           >
-            <div className="bg-cream rounded-2xl overflow-hidden shadow-Professional h-96">
+            <div className="bg-cream rounded-2xl overflow-hidden shadow-Professional relative w-full aspect-square md:aspect-[4/3] lg:aspect-[16/9]">
               <iframe
                 title="Mumbai Service Area Map"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.11609868138!2d72.7410995442406!3d19.08219783989307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b63f8f91c6a9%3A0x7f5f6b6e75c6e8df!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1695291860180!5m2!1sen!2sin"
-                width="100%"
-                height="100%"
+                className="absolute inset-0 w-full h-full"
                 style={{ border: 0 }}
                 allowFullScreen={true}
                 loading="lazy"

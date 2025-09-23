@@ -3,6 +3,14 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const galleryItems = [
   {
@@ -33,13 +41,7 @@ const galleryItems = [
     image: "/luxury-nail-art-salon-with-elegant-manicure-setup.jpg",
     description: "Modern geometric patterns in rose gold",
   },
-  {
-    id: 5,
-    category: "spa",
-    title: "Relaxing Spa Environment",
-    image: "/luxury-salon-interior.png",
-    description: "Tranquil spa setting for ultimate relaxation",
-  },
+
   {
     id: 6,
     category: "skincare",
@@ -49,9 +51,13 @@ const galleryItems = [
   },
 ];
 
-export function GalleryGrid() {
+interface GalleryGridProps {
+  activeCategory: string;
+}
+
+export function GalleryGrid({ activeCategory }: GalleryGridProps) {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [activeCategory, setActiveCategory] = useState("all");
+  const isMobile = useIsMobile();
 
   const filteredItems =
     activeCategory === "all"
@@ -91,36 +97,79 @@ export function GalleryGrid() {
     <>
       <section className="py-16 bg-cream/30">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group cursor-pointer"
-                onClick={() => openLightbox(item.id)}
-              >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-Professional  hover:shadow-Professional -hover transition-all duration-500 group-hover:-translate-y-2">
-                  <div className="aspect-square overflow-hidden relative">
-                    <img
-                      src={item.image || "/placeholder.svg"}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-warm-brown/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <h3 className="font-cormorant text-xl font-bold mb-1">
-                        {item.title}
-                      </h3>
-                      <p className="font-inter text-sm">{item.description}</p>
-                    </div>
+          {isMobile ? (
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {filteredItems.map((item, index) => (
+                  <CarouselItem
+                    key={item.id}
+                    className="md:basis-1/2 lg:basis-1/3"
+                  >
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="relative group overflow-hidden rounded-lg shadow-lg cursor-pointer"
+                      onClick={() => openLightbox(item.id)}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-64 sm:h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                      <div className="absolute bottom-0 left-0 p-6">
+                        <h3 className="font-playfair text-2xl font-bold text-white mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="font-inter text-white/90">
+                          {item.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute -left-2 sm:left-4 top-1/2 -translate-y-1/2" />
+              <CarouselNext className="absolute -right-2 sm:right-4 top-1/2 -translate-y-1/2" />
+            </Carousel>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="relative group overflow-hidden rounded-lg shadow-lg cursor-pointer"
+                  onClick={() => openLightbox(item.id)}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 p-6">
+                    <h3 className="font-playfair text-2xl font-bold text-white mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="font-inter text-white/90">
+                      {item.description}
+                    </p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

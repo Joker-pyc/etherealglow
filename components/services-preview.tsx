@@ -4,7 +4,15 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import { Palette, Scissors, Sparkles, Heart } from "lucide-react";
+import { Palette, Scissors, Sparkles } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const services = [
   {
@@ -34,6 +42,55 @@ const services = [
 ];
 
 export function ServicesPreview() {
+  const isMobile = useIsMobile();
+
+  const renderServiceCard = (service: any, index: number) => (
+    <motion.div
+      key={index}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: isMobile ? 0 : index * 0.2 }}
+      viewport={{ once: true }}
+      className="h-full"
+    >
+      <Card className="group overflow-hidden Professional -shadow hover:shadow-2xl transition-all duration-500 border-0 bg-white h-full flex flex-col">
+        <div className="relative overflow-hidden">
+          <img
+            src={service.image || "/placeholder.svg"}
+            alt={service.title}
+            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-warm-brown/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute top-4 left-4 bg-rose-gold text-white p-2 rounded-full">
+            <service.icon className="h-5 w-5" />
+          </div>
+        </div>
+        <CardContent className="p-6 flex flex-col flex-grow">
+          <h3 className="font-cormorant text-xl font-semibold text-warm-brown mb-2">
+            {service.title}
+          </h3>
+          <p className="font-montserrat text-sm text-warm-brown/70 mb-4 leading-relaxed flex-grow">
+            {service.description}
+          </p>
+          <div className="flex items-center justify-between mt-auto">
+            <span className="font-playfair text-lg font-bold text-rose-gold">
+              {service.price}
+            </span>
+            <Link href="/services" passHref>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-rose-gold hover:text-soft-gold hover:bg-rose-gold/10 font-montserrat"
+              >
+                Learn More
+              </Button>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+
   return (
     <section className="py-20 bg-warm-beige">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,60 +111,40 @@ export function ServicesPreview() {
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              viewport={{ once: true }}
-            >
-              <Card className="group overflow-hidden Professional -shadow hover:shadow-2xl transition-all duration-500 border-0 bg-white">
-                <div className="relative overflow-hidden">
-                  <img
-                    src={service.image || "/placeholder.svg"}
-                    alt={service.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-warm-brown/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-4 left-4 bg-rose-gold text-white p-2 rounded-full">
-                    <service.icon className="h-5 w-5" />
+        {/* Services */}
+        {isMobile ? (
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-xs sm:max-w-sm mx-auto"
+          >
+            <CarouselContent>
+              {services.map((service, index) => (
+                <CarouselItem key={index}>
+                  <div className="p-1 h-full">
+                    {renderServiceCard(service, index)}
                   </div>
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="font-cormorant text-xl font-semibold text-warm-brown mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="font-montserrat text-sm text-warm-brown/70 mb-4 leading-relaxed">
-                    {service.description}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-playfair text-lg font-bold text-rose-gold">
-                      {service.price}
-                    </span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-rose-gold hover:text-soft-gold hover:bg-rose-gold/10 font-montserrat"
-                    >
-                      Learn More
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2" />
+            <CarouselNext className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2" />
+          </Carousel>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {services.map(renderServiceCard)}
+          </div>
+        )}
 
-        {/* CTA */}
+        {/* View All Services Button */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}
-          className="text-center"
+          className="text-center mt-8 sm:mt-10"
         >
           <Button
             asChild

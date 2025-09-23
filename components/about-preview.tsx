@@ -31,6 +31,16 @@ export function AboutPreview() {
               </span>
             </h2>
 
+            {/* Mobile Image shown immediately after the title */}
+            <div className="relative overflow-hidden rounded-2xl Professional -shadow mb-8 lg:hidden">
+              <img
+                src="/professional-beauty-salon-owner-ishika-in-elegant-.jpg"
+                alt="Ishika - Founder of Etherealglow"
+                className="w-full h-[420px] sm:h-[480px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-warm-brown/20 to-transparent"></div>
+            </div>
+
             <div className="space-y-4 mb-8">
               <p className="font-montserrat text-lg text-warm-brown/80 leading-relaxed">
                 With over three years of passion-driven expertise, Ishika has
@@ -88,13 +98,13 @@ export function AboutPreview() {
             </motion.div>
           </motion.div>
 
-          {/* Image */}
+          {/* Image (desktop/tablet) */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="relative"
+            className="relative hidden lg:block"
           >
             <div className="relative overflow-hidden rounded-2xl Professional -shadow">
               <img
@@ -105,28 +115,7 @@ export function AboutPreview() {
               <div className="absolute inset-0 bg-gradient-to-t from-warm-brown/20 to-transparent"></div>
             </div>
 
-            {/* Floating Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              viewport={{ once: true }}
-              className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl Professional -shadow"
-            >
-              <div className="flex items-center space-x-4">
-                <div className="bg-rose-gold text-white p-3 rounded-full">
-                  <Award className="h-6 w-6" />
-                </div>
-                <div>
-                  <div className="font-cormorant text-lg font-semibold text-warm-brown">
-                    Certified Expert
-                  </div>
-                  <div className="font-montserrat text-sm text-warm-brown/70">
-                    Advanced Beauty Specialist
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            {/* Removed floating certified expert card per request */}
           </motion.div>
         </div>
       </div>
