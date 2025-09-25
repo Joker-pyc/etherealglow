@@ -12,7 +12,9 @@ export function AboutHero() {
           alt="Etherealglow Salon Interior"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-cream/90 via-cream/70 to-transparent" />
+        {/* Enhanced overlay for better text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cream/95 via-warm-beige/80 to-cream/60" />
+        <div className="absolute inset-0 bg-white/30" />
       </div>
 
       {/* Content */}
@@ -22,10 +24,10 @@ export function AboutHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="font-playfair text-5xl md:text-7xl font-bold text-warm-brown mb-6 text-balance">
+          <h1 className="font-playfair text-5xl md:text-7xl font-bold text-warm-brown mb-6 text-balance drop-shadow-lg">
             Our Story
           </h1>
-          <p className="font-montserrat text-xl md:text-2xl text-dusty-rose max-w-3xl mx-auto leading-relaxed text-pretty">
+          <p className="font-montserrat text-xl md:text-2xl text-warm-brown/80 max-w-3xl mx-auto leading-relaxed text-pretty drop-shadow-md">
             Where passion meets artistry, and every client becomes part of our
             beautiful journey
           </p>

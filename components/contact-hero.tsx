@@ -12,7 +12,9 @@ export function ContactHero() {
           alt="Contact Etherealglow"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-dusty-rose/80 via-dusty-rose/60 to-transparent" />
+        {/* Enhanced overlay for better text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-warm-brown/80 via-warm-brown/50 to-dusty-rose/70" />
+        <div className="absolute inset-0 bg-white/20" />
       </div>
 
       {/* Content */}
@@ -22,10 +24,10 @@ export function ContactHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="font-playfair text-5xl md:text-7xl font-bold text-white mb-6 text-balance">
+          <h1 className="font-playfair text-5xl md:text-7xl font-bold text-warm-brown mb-6 text-balance drop-shadow-lg">
             Get In Touch
           </h1>
-          <p className="font-montserrat text-xl md:text-2xl text-cream max-w-3xl mx-auto leading-relaxed text-pretty">
+          <p className="font-montserrat text-xl md:text-2xl text-warm-brown/90 max-w-3xl mx-auto leading-relaxed text-pretty drop-shadow-md">
             We'd love to hear from you. Reach out for appointments, questions,
             or just to say hello
           </p>

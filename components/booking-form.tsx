@@ -4,42 +4,8 @@ import type React from "react";
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import {
-  Calendar,
-  Clock,
-  User,
-  Phone,
-  Mail,
-  MessageSquare,
-} from "lucide-react";
+import { Calendar, Clock, User, Phone, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const services = [
-  {
-    id: "nail-art",
-    name: "Nail Art & Extensions",
-    duration: "90 min",
-    price: "₹2,500",
-  },
-  {
-    id: "facial",
-    name: "Signature Facial",
-    duration: "75 min",
-    price: "₹3,500",
-  },
-  {
-    id: "hair-styling",
-    name: "Hair Styling & Color",
-    duration: "120 min",
-    price: "₹4,500",
-  },
-  {
-    id: "spa-package",
-    name: "Professional  Spa Package",
-    duration: "180 min",
-    price: "₹8,500",
-  },
-];
 
 const timeSlots = [
   "9:00 AM",
@@ -53,12 +19,10 @@ const timeSlots = [
 
 export function BookingForm() {
   const [formData, setFormData] = useState({
-    service: "",
     date: "",
     time: "",
     name: "",
     phone: "",
-    email: "",
     notes: "",
   });
 
@@ -76,12 +40,10 @@ export function BookingForm() {
     );
     setIsSubmitting(false);
     setFormData({
-      service: "",
       date: "",
       time: "",
       name: "",
       phone: "",
-      email: "",
       notes: "",
     });
   };
@@ -103,47 +65,6 @@ export function BookingForm() {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Service Selection */}
-        <div>
-          <label className="block font-montserrat font-medium text-warm-brown mb-3">
-            Select Service
-          </label>
-          <div className="grid gap-3">
-            {services.map((service) => (
-              <label
-                key={service.id}
-                className={`flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                  formData.service === service.id
-                    ? "border-dusty-rose bg-dusty-rose/10"
-                    : "border-cream hover:border-dusty-rose/50"
-                }`}
-              >
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    name="service"
-                    value={service.id}
-                    checked={formData.service === service.id}
-                    onChange={(e) => updateFormData("service", e.target.value)}
-                    className="sr-only"
-                  />
-                  <div>
-                    <div className="font-cormorant text-lg font-semibold text-warm-brown">
-                      {service.name}
-                    </div>
-                    <div className="font-inter text-sm text-warm-brown/70">
-                      {service.duration}
-                    </div>
-                  </div>
-                </div>
-                <div className="font-montserrat font-bold text-dusty-rose">
-                  {service.price}
-                </div>
-              </label>
-            ))}
-          </div>
-        </div>
-
         {/* Date and Time */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
@@ -215,21 +136,6 @@ export function BookingForm() {
           </div>
         </div>
 
-        <div>
-          <label className="block font-montserrat font-medium text-warm-brown mb-3">
-            <Mail className="inline w-4 h-4 mr-2" />
-            Email Address
-          </label>
-          <input
-            type="email"
-            value={formData.email}
-            onChange={(e) => updateFormData("email", e.target.value)}
-            className="w-full p-4 rounded-xl border-2 border-cream focus:border-dusty-rose outline-none font-inter"
-            placeholder="your.email@example.com"
-            required
-          />
-        </div>
-
         {/* Special Requests */}
         <div>
           <label className="block font-montserrat font-medium text-warm-brown mb-3">
@@ -249,7 +155,7 @@ export function BookingForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-gradient-rose hover:opacity-90 text-white font-montserrat font-semibold py-4 px-8 rounded-xl transition-all duration-300 disabled:opacity-50"
+          className="w-full bg-rose-gold hover:bg-soft-gold text-white font-montserrat font-semibold py-4 px-8 rounded-xl transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-xl transform hover:scale-105"
         >
           {isSubmitting ? "Submitting..." : "Book Appointment"}
         </Button>

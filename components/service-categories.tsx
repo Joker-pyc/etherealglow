@@ -3,8 +3,22 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Palette, Sparkles, Scissors, Heart, Crown, Gift } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import {
+  ArrowRight,
+  Star,
+  Phone,
+  Palette,
+  Scissors,
+  Crown,
+  Sparkles,
+  Heart,
+  Zap,
+} from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useRouter } from "next/navigation";
+import { useState, memo } from "react";
+import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -15,243 +29,352 @@ import {
 
 const serviceCategories = [
   {
-    icon: Palette,
-    title: "Nail services",
-    description: "Elegant nail care and enhancements tailored to your style.",
+    id: "nail-services",
+    title: "Nail Services",
+    description: "Professional nail care and beautiful enhancements.",
     image: "/luxury-nail-art-salon-with-elegant-manicure-setup.jpg",
     services: [
-      "Gel polish / Manicure",
-      "Nail extensions / Pedicure",
-      "Gel extensions",
-      "Soft gel extensions",
-    ],
-  },
-  {
-    icon: Scissors,
-    title: "Hair services",
-    description:
-      "Precision cuts, color, treatments and relaxing spa for your hair.",
-    image: "/elegant-hair-salon-with-modern-styling-chairs.jpg",
-    services: [
-      "Precision haircut",
-      "Global hair colour",
-      "Root touch-up",
-      "Highlights",
-      "Hair styling (blow-dry / ironing / curls)",
-      "Keratin / Botox / Nanoplastia",
-      "Straight smoothing",
-      "Head massage",
-    ],
-  },
-  {
-    icon: Crown,
-    title: "Makeup",
-    description: "Flawless looks for every occasion, from party to bridal.",
-    image: "/happy-female-client-portrait.jpg",
-    services: [
-      "Ladies makeup (general makeup)",
-      "Engagement makeup",
-      "Bridal makeup",
-      "Party makeup",
-    ],
-  },
-  {
-    icon: Gift,
-    title: "Pamper package",
-    description: "Curated head-to-toe indulgence for deep relaxation and glow.",
-    image: "/serene-spa-treatment-room-with-massage-table.jpg",
-    services: [
-      "Full body scrub & wrap",
-      "Facial",
-      "Manicure with gel (optional)",
-      "Polish",
-      "Hair spa",
-      "Pedicure",
-    ],
-  },
-  {
-    icon: Sparkles,
-    title: "Skin / Facials / Waxing",
-    description:
-      "Advanced facials and effective waxing for smooth, radiant skin.",
-    image: "/professional-skincare-specialist-in-white-coat.jpg",
-    services: [
-      "Deep cleansing facial (cleanup)",
-      "Basic facial",
-      "Body scrub & wrap",
-      "Anti-ageing facial",
-      "Advanced facial",
-      "Hand wax + underarm",
-      "Half leg wax",
-      "Full leg wax",
-    ],
-  },
-  {
-    icon: Sparkles,
-    title: "Monthly maintenance (skin) — Choose any 4",
-    description: "Build your own routine with any 4 essentials each month.",
-    image: "/happy-client-with-beautiful-hair.jpg",
-    services: [
-      "Face cleanup (Deep cleansing facial)",
-      "Basic facials",
       "Manicure",
       "Pedicure",
-      "Full hand wax",
-      "Half leg wax",
-      "Underarm wax",
+      "Gel Polish",
+      "Nail Extensions",
+      "Nail Art",
     ],
+    featured: false,
+    icon: Palette,
+    iconColor: "text-pink-600",
+  },
+  {
+    id: "hair-services",
+    title: "Hair Services",
+    description: "Expert cuts, styling, and treatments for beautiful hair.",
+    image: "/elegant-hair-salon-with-modern-styling-chairs.jpg",
+    services: [
+      "Haircut & Styling",
+      "Hair Coloring",
+      "Highlights",
+      "Keratin Treatment",
+      "Hair Spa",
+    ],
+    featured: true,
+    icon: Scissors,
+    iconColor: "text-amber-600",
+  },
+  {
+    id: "makeup",
+    title: "Makeup",
+    description: "Flawless makeup for every special occasion.",
+    image: "/happy-female-client-portrait.jpg",
+    services: [
+      "Bridal Makeup",
+      "Party Makeup",
+      "Engagement Makeup",
+      "Professional Makeup",
+      "Special Events",
+    ],
+    featured: false,
+    icon: Crown,
+    iconColor: "text-purple-600",
+  },
+  {
+    id: "pamper-package",
+    title: "Pamper Package",
+    description: "Complete relaxation and beauty treatments.",
+    image: "/serene-spa-treatment-room-with-massage-table.jpg",
+    services: [
+      "Full Body Treatment",
+      "Facial & Skincare",
+      "Hair & Nail Care",
+      "Relaxation Therapy",
+      "Beauty Package",
+    ],
+    featured: true,
+    icon: Sparkles,
+    iconColor: "text-emerald-600",
+  },
+  {
+    id: "beauty-services",
+    title: "Beauty services",
+    description: "Advanced skincare treatments for glowing skin.",
+    image: "/professional-skincare-specialist-in-white-coat.jpg",
+    services: [
+      "Deep Cleansing Facial",
+      "Anti-Aging Treatment",
+      "Body Scrub & Wrap",
+      "Waxing Services",
+      "Skin Analysis",
+    ],
+    featured: false,
+    icon: Zap,
+    iconColor: "text-blue-600",
+  },
+  {
+    id: "monthly-care",
+    title: "Monthly Care",
+    description: "Regular beauty maintenance packages.",
+    image: "/happy-client-with-beautiful-hair.jpg",
+    services: [
+      "Monthly Facial",
+      "Regular Manicure",
+      "Routine Pedicure",
+      "Hair Maintenance",
+      "Skin Care Routine",
+    ],
+    featured: false,
+    icon: Heart,
+    iconColor: "text-rose-600",
   },
 ];
 
+// Optimized Service Card Component
+const ServiceCard = memo(
+  ({
+    service,
+    index,
+    onViewDetails,
+  }: {
+    service: any;
+    index: number;
+    onViewDetails: (id: string) => void;
+  }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true }}
+      className="h-full"
+    >
+      <Card className="group overflow-hidden h-full border-0 bg-white shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+        <div className="relative overflow-hidden h-48">
+          <Image
+            src={service.image || "/placeholder.svg"}
+            alt={service.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            priority={index < 3}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+          {/* Icon and Badge */}
+          <div className="absolute top-3 left-3 flex items-center gap-2">
+            <div
+              className={`w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center ${service.iconColor}`}
+            >
+              <service.icon className="h-5 w-5" />
+            </div>
+            {service.featured && (
+              <Badge className="bg-rose-gold text-white text-xs font-medium">
+                <Star className="h-3 w-3 mr-1" />
+                Popular
+              </Badge>
+            )}
+          </div>
+
+          {/* Quick Contact on Hover */}
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <Button
+              size="sm"
+              className="bg-rose-gold hover:bg-soft-gold text-white rounded-full h-8 w-8 p-0"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open("https://wa.me/your-number", "_blank");
+              }}
+            >
+              <Phone className="h-3 w-3" />
+            </Button>
+          </div>
+        </div>
+
+        <CardContent className="p-4">
+          <div className="mb-3">
+            <h3 className="font-playfair text-xl font-semibold text-warm-brown mb-2">
+              {service.title}
+            </h3>
+            <p className="font-montserrat text-sm text-warm-brown/70 leading-relaxed">
+              {service.description}
+            </p>
+          </div>
+
+          <div className="mb-4">
+            <div className="flex flex-wrap gap-1">
+              {service.services.slice(0, 3).map((item: string, i: number) => (
+                <span
+                  key={i}
+                  className="text-xs bg-cream text-warm-brown/80 px-2 py-1 rounded-full"
+                >
+                  {item}
+                </span>
+              ))}
+              {service.services.length > 3 && (
+                <span className="text-xs text-rose-gold font-medium">
+                  +{service.services.length - 3} more
+                </span>
+              )}
+            </div>
+          </div>
+
+          <Button
+            onClick={() => onViewDetails(service.id)}
+            className="w-full bg-rose-gold hover:bg-soft-gold text-white font-montserrat rounded-full transition-all duration-300 transform hover:scale-105"
+          >
+            View Pricing
+            <ArrowRight className="h-4 w-4 ml-2" />
+          </Button>
+        </CardContent>
+      </Card>
+    </motion.div>
+  )
+);
+
+ServiceCard.displayName = "ServiceCard";
+
 export function ServiceCategories() {
   const isMobile = useIsMobile();
+  const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handleViewDetails = (categoryId: string) => {
+    // console.log("Navigating to category:", categoryId, "isMobile:", isMobile);
+    setIsNavigating(true);
+
+    // Simplified navigation logic
+    if (!isMobile) {
+      // Desktop: Direct smooth scroll
+      const pricingSection = document.getElementById("pricing-section");
+      // console.log("Pricing section found:", !!pricingSection);
+      if (pricingSection) {
+        pricingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => {
+          const categoryElement = document.getElementById(categoryId);
+          // console.log("Category element found:", !!categoryElement, "ID:", categoryId);
+          if (categoryElement) {
+            categoryElement.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
+          setIsNavigating(false);
+        }, 600);
+      }
+    } else {
+      // Mobile: Hash navigation for accordion
+      window.location.hash = categoryId;
+      window.dispatchEvent(
+        new CustomEvent("serviceNavigation", {
+          detail: { categoryId, isMobile },
+        })
+      );
+
+      const pricingSection = document.getElementById("pricing-section");
+      if (pricingSection) {
+        pricingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => setIsNavigating(false), 1000);
+      }
+    }
+  };
+
   return (
-    <section className="py-20 bg-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+    <section className="py-16 bg-gradient-to-br from-cream to-warm-beige relative overflow-hidden">
+      {/* Simplified Background */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-10 w-20 h-20 border border-rose-gold rounded-full"></div>
+        <div className="absolute bottom-10 right-10 w-16 h-16 border border-soft-gold rounded-full"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Clean Header */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-warm-brown mb-4 text-balance">
-            Service Categories
+          <h2 className="font-playfair text-3xl md:text-4xl lg:text-5xl font-bold text-warm-brown mb-4">
+            Our Services
           </h2>
-          <p className="font-montserrat text-lg text-warm-brown/80 max-w-2xl mx-auto text-pretty">
-            Explore our comprehensive range of beauty services, each designed to
-            provide exceptional results
+          <p className="font-montserrat text-lg text-warm-brown/80 max-w-2xl mx-auto">
+            Professional beauty treatments designed to enhance your natural
+            radiance
           </p>
         </motion.div>
 
-        {/* Services Grid / Carousel */}
+        {/* Navigation Indicator */}
+        {isNavigating && (
+          <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-rose-gold text-white px-4 py-2 rounded-full text-sm font-montserrat shadow-lg">
+            Navigating to pricing...
+          </div>
+        )}
+
+        {/* Service Grid */}
         {isMobile ? (
-          <Carousel className="w-full max-w-xs sm:max-w-sm mx-auto">
-            <CarouselContent>
-              {serviceCategories.map((category, index) => (
-                <CarouselItem key={index}>
-                  <div className="p-1 h-full">
-                    <motion.div
-                      initial={{ opacity: 0, y: 50 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <Card className="group overflow-hidden Professional -shadow hover:shadow-2xl transition-all duration-500 border-0 bg-white">
-                        <div className="relative overflow-hidden">
-                          <img
-                            src={category.image || "/placeholder.svg"}
-                            alt={category.title}
-                            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-warm-brown/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          <div className="absolute top-4 left-4 bg-rose-gold text-white p-3 rounded-full">
-                            <category.icon className="h-6 w-6" />
-                          </div>
-                        </div>
-
-                        <CardContent className="p-6">
-                          <h3 className="font-cormorant text-2xl font-semibold text-warm-brown mb-3">
-                            {category.title}
-                          </h3>
-                          <p className="font-montserrat text-warm-brown/70 mb-4 leading-relaxed">
-                            {category.description}
-                          </p>
-                          <div className="mb-6">
-                            <h4 className="font-montserrat font-semibold text-warm-brown mb-2">
-                              Services Include:
-                            </h4>
-                            <ul className="space-y-1">
-                              {category.services
-                                .slice(0, 4)
-                                .map((service, serviceIndex) => (
-                                  <li
-                                    key={serviceIndex}
-                                    className="font-montserrat text-sm text-warm-brown/70 flex items-center"
-                                  >
-                                    <div className="w-1.5 h-1.5 bg-rose-gold rounded-full mr-2 flex-shrink-0"></div>
-                                    {service}
-                                  </li>
-                                ))}
-                            </ul>
-                          </div>
-                          <Button className="w-full bg-rose-gold hover:bg-soft-gold text-white font-montserrat rounded-full transition-all duration-300">
-                            View Details & Pricing
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2" />
-            <CarouselNext className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2" />
-          </Carousel>
+          <div className="relative">
+            <Carousel className="w-full max-w-sm mx-auto">
+              <CarouselContent>
+                {serviceCategories.map((service, index) => (
+                  <CarouselItem key={index}>
+                    <div className="p-1">
+                      <ServiceCard
+                        service={service}
+                        index={index}
+                        onViewDetails={handleViewDetails}
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2" />
+              <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2" />
+            </Carousel>
+          </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {serviceCategories.map((category, index) => (
-              <motion.div
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {serviceCategories.map((service, index) => (
+              <ServiceCard
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <Card className="group overflow-hidden Professional -shadow hover:shadow-2xl transition-all duration-500 border-0 bg-white">
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={category.image || "/placeholder.svg"}
-                      alt={category.title}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-warm-brown/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute top-4 left-4 bg-rose-gold text-white p-3 rounded-full">
-                      <category.icon className="h-6 w-6" />
-                    </div>
-                  </div>
-
-                  <CardContent className="p-6">
-                    <h3 className="font-cormorant text-2xl font-semibold text-warm-brown mb-3">
-                      {category.title}
-                    </h3>
-                    <p className="font-montserrat text-warm-brown/70 mb-4 leading-relaxed">
-                      {category.description}
-                    </p>
-                    <div className="mb-6">
-                      <h4 className="font-montserrat font-semibold text-warm-brown mb-2">
-                        Services Include:
-                      </h4>
-                      <ul className="space-y-1">
-                        {category.services
-                          .slice(0, 4)
-                          .map((service, serviceIndex) => (
-                            <li
-                              key={serviceIndex}
-                              className="font-montserrat text-sm text-warm-brown/70 flex items-center"
-                            >
-                              <div className="w-1.5 h-1.5 bg-rose-gold rounded-full mr-2 flex-shrink-0"></div>
-                              {service}
-                            </li>
-                          ))}
-                        {category.services.length > 4 && (
-                          <li className="font-montserrat text-sm text-rose-gold">
-                            +{category.services.length - 4} more services
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-
-                    <Button className="w-full bg-rose-gold hover:bg-soft-gold text-white font-montserrat rounded-full transition-all duration-300">
-                      View Details & Pricing
-                    </Button>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                service={service}
+                index={index}
+                onViewDetails={handleViewDetails}
+              />
             ))}
           </div>
         )}
+
+        {/* Simple CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="text-center mt-12"
+        >
+          <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-rose-gold/20">
+            <h3 className="font-playfair text-2xl font-semibold text-warm-brown mb-3">
+              Ready to Book?
+            </h3>
+            <p className="font-montserrat text-warm-brown/70 mb-4">
+              Get in touch for personalized beauty treatments
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button
+                onClick={() => router.push("/booking")}
+                className="bg-rose-gold hover:bg-soft-gold text-white font-montserrat px-6 py-3 rounded-full"
+              >
+                Book Appointment
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  window.open("https://wa.me/your-number", "_blank")
+                }
+                className="border-rose-gold text-rose-gold hover:bg-rose-gold hover:text-white font-montserrat px-6 py-3 rounded-full"
+              >
+                <Phone className="h-4 w-4 mr-2" />
+                WhatsApp
+              </Button>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

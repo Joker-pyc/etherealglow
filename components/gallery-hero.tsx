@@ -12,7 +12,9 @@ export function GalleryHero() {
           alt="Etherealglow Gallery"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-warm-brown/60 via-transparent to-cream/90" />
+        {/* Stronger overlay for better text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-warm-brown/80 via-warm-brown/40 to-cream/90" />
+        <div className="absolute inset-0 bg-white/20" />
       </div>
 
       {/* Content */}
@@ -22,10 +24,10 @@ export function GalleryHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="font-playfair text-5xl md:text-7xl font-bold text-white mb-6 text-balance">
+          <h1 className="font-playfair text-5xl md:text-7xl font-bold text-warm-brown mb-6 text-balance drop-shadow-lg">
             Our Gallery
           </h1>
-          <p className="font-montserrat text-xl md:text-2xl text-cream max-w-3xl mx-auto leading-relaxed text-pretty">
+          <p className="font-montserrat text-xl md:text-2xl text-warm-brown/90 max-w-3xl mx-auto leading-relaxed text-pretty drop-shadow-md">
             Discover the artistry and elegance that defines every Etherealglow
             experience
           </p>

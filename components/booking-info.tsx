@@ -127,11 +127,13 @@ export function BookingInfo() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
         viewport={{ once: true }}
-        className="bg-gradient-rose rounded-2xl p-6 text-white text-center"
+        className="bg-gradient-to-br from-warm-brown to-dusty-rose rounded-2xl p-6 text-white text-center shadow-lg"
       >
-        <Calendar className="w-8 h-8 mx-auto mb-4" />
-        <h3 className="font-playfair text-xl font-bold mb-2">Need Help?</h3>
-        <p className="font-inter text-sm mb-4 opacity-90">
+        <Calendar className="w-8 h-8 mx-auto mb-4 text-cream" />
+        <h3 className="font-playfair text-xl font-bold mb-2 text-cream drop-shadow-md">
+          Need Help?
+        </h3>
+        <p className="font-inter text-sm mb-4 text-cream/90 drop-shadow-sm">
           Call us directly for immediate assistance or special requests
         </p>
         <a
